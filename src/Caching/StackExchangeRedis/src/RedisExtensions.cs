@@ -11,7 +11,7 @@ internal static class RedisExtensions
     internal static RedisValue[] HashMemberGet(this IDatabase cache, string key, params string[] members)
     {
         // TODO: Error checking?
-        return cache.HashGet(key, GetRedisMembers(members));
+        return cache.HashGet(key, GetRedisMembers(members), CommandFlags.PreferReplica);
     }
 
     internal static async Task<RedisValue[]> HashMemberGetAsync(
@@ -20,7 +20,7 @@ internal static class RedisExtensions
         params string[] members)
     {
         // TODO: Error checking?
-        return await cache.HashGetAsync(key, GetRedisMembers(members)).ConfigureAwait(false);
+        return await cache.HashGetAsync(key, GetRedisMembers(members), CommandFlags.PreferReplica).ConfigureAwait(false);
     }
 
     private static RedisValue[] GetRedisMembers(params string[] members)
